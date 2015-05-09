@@ -2,7 +2,7 @@
   "manifest_version": 2,
 
   "name": "Get image from tistory.com",
-  "description": "This extension shows a Google Image search result for the current page",
+  "description": "Get original image size from tistory.com",
   "version": "1.0",
 
   "browser_action": {
