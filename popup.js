@@ -92,7 +92,24 @@ function renderStatus(statusText) {
   document.getElementById('status').textContent = statusText;
 }
 
+
+
+function createImage(imgUrl,divIDtoShow) {
+    var imgs = [];
+	
+	var div = document.createElement('div');
+	for (i = 0; i < imgUrl.length; ++i){
+		var tagimg = document.createElement('img');
+		tagimg.src = imgUrl[i];
+		div.appendChild(tagimg);
+	} 
+	var element = document.getElementById(divIDtoShow);
+	element.appendChild(div);
+}
+
 document.addEventListener('DOMContentLoaded', function() {
+	
+	
   getCurrentTabUrl(function(url) {
     // Put the image URL in Google search.
     renderStatus('Performing Google Image search for ' + url);
@@ -116,19 +133,55 @@ document.addEventListener('DOMContentLoaded', function() {
     // });
 	
 	
-	chrome.tabs.getSelected(null, function(tab) {
-        var tabid = tab.id;
-		var createTab ={url:"http://www.google.com",index:tab.index +1};
-		chrome.tabs.create(createTab);
-    });
+
   });
   
-  //alert('dsdsdsd');
-  
-  document.getElementById('testjquery').textContent = "erererere";
+	chrome.tabs.query({'active': true}, function(tabs) {
+		var buttonshow = document.getElementById('button_getimage');
+		buttonshow.addEventListener('click', getimage);
+		document.getElementById('do-count').onclick = count;
+		//chrome.tabs.update(tabs[0].id, {url: "http://www.google.com"});		
+	});
+
+	// chrome.tabs.getSelected(null, function(tab) {
+		// var tabid = tab.id;
+		
+		// var allImage = getImage();
+	// console.log(allImage);
+	// createImage(allImage);
+		
+		// var createTab ={url:"http://www.google.com",index:tab.index +1};
+		// chrome.tabs.create(createTab);
+	// });
+	
+	// chrome.tabs.getSelected(null, function(tab) {
+		// chrome.tabs.sendRequest(tab.id, {method: "getText"}, function(response) {
+			// if(response.method=="getText"){
+				// alltext = response.data;
+				// document.getElementById('testjquery').textContent = alltext;
+			// }
+		// });
+	// });
+	document.getElementById('testjquery').textContent = "erererere";
 });
 
-function showTabId(tab) {
-	var tabId = tab.id;
-	alert(tabId);
+function getimage() {
+	//alert("getimage");
+	chrome.tabs.query({'active': true}, function(tabs) {
+		chrome.tabs.executeScript(tabs[0].id,{file:"contentscript.js"});
+		chrome.tabs.sendRequest(tab.id, {method: "getImage"}, function(response) {
+			if(response.method=="getImage"){
+				alltext = response.data;
+				document.getElementById('showimg').textContent = alltext;
+			}
+		});
+	});
+	//self.close();
+	//window.close();
+}
+
+var a=0;
+function count() {
+    a++;
+    document.getElementById('demo').textContent = a;
 }

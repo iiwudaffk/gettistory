@@ -13,6 +13,25 @@
   "permissions": [
     "activeTab",
 	"tabs",
-    "https://ajax.googleapis.com/"
+    "https://ajax.googleapis.com/",
+	"http://*.tistory.com/*",
+	"https://*.tistory.com/*",
+	"http://cdnjs.cloudflare.com/ajax/libs/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["http://*.tistory.com/*","https://*.tistory.com/*"],
+      "js": [		
+		"libs/jquery.min.js",
+		"libs/jquery.min.map",
+		"libs/jquery-ui.min.js"		
+		],
+	  "css": [
+		"libs/jquery-ui.min.css",
+		"libs/jquery-ui.theme.min.css"
+		]	
+    }
   ]
+  
+  
 }
